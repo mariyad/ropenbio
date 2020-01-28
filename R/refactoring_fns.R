@@ -44,21 +44,12 @@ get_figure_label = function (node, mongo_key, fig_number)
 
 
 #' @export
-set_component_frame = function(label, mongo_key, type, orcid, parent, key, publisher_id, journal_id)
-{
-
-  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent, key = key, publisher_id = publisher_id, journal_id = journal_id,  stringsAsFactors = FALSE)
-  return(df)
-}
-
-
-#' @export
 process_author = function (node, mongo_key)
 {
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA, publisher_id = NA, journal_id = NA )
+  df = data.frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA, publisher_id = NA, journal_id = NA,  stringsAsFactors = FALSE )
 
   return(df)
 }
@@ -72,9 +63,9 @@ process_tnu = function (node, mongo_key)
   label = strip_trailing_whitespace(label)
   #label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   label = escape_special(label)
-  df = set_component_frame(label = label, mongo_key = mongo_key,
+  df = data.frame(label = label, mongo_key = mongo_key,
                              type = names(mongo_key), orcid = NA, parent = NA,
-                             key = NA, publisher_id = NA, journal_id = NA )
+                             key = NA, publisher_id = NA, journal_id = NA,  stringsAsFactors = FALSE )
   return(df)
 }
 
@@ -99,8 +90,8 @@ process_figure = function (node, mongo_key, publisher_id, journal_id)
   label = escape_special(label)
  # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key,
-                           type = type, orcid = NA, parent = NA, key = fig_id, publisher_id = publisher_id, journal_id = journal_id)
+  df = data.frame(label = label, mongo_key = mongo_key,
+                           type = type, orcid = NA, parent = NA, key = fig_id, publisher_id = publisher_id, journal_id = journal_id,  stringsAsFactors = FALSE)
   return(df)
 }
 
@@ -116,9 +107,9 @@ process_treatment = function (node, mongo_key,publisher_id, journal_id)
     label = strip_trailing_whitespace(label)
     label = escape_special(label)
  #   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
-    df = set_component_frame(label = label, mongo_key = mongo_key,
+    df = data.frame(label = label, mongo_key = mongo_key,
                              type = names(mongo_key), orcid = NA, parent = NA,
-                             key = treat_id$uri, publisher_id = publisher_id, journal_id = journal_id)
+                             key = treat_id$uri, publisher_id = publisher_id, journal_id = journal_id,  stringsAsFactors = FALSE)
   }
   else {
     df = process_general_component(node, mongo_key)
@@ -139,7 +130,7 @@ process_general_component = function (node, mongo_key,  publisher_id, journal_id
    label = escape_special(label) #escape special chars
  #  label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   #label = escape_special_json(label)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA,  publisher_id = publisher_id, journal_id = journal_id)
+  df = data.frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA,  publisher_id = publisher_id, journal_id = journal_id,  stringsAsFactors = FALSE)
   return(df)
 }
 

@@ -52,7 +52,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
       semantic_type = BOLDRecord
     }
     
-    bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA)
+    bold_df = data.frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA, stringsAsFactors = FALSE)
     bold_id = identifier(get_or_set_mongoid(bold_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , bold_id)
     tt$add_triple(bold_id, rdf_type , semantic_type)
@@ -67,7 +67,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
   sapply(atoms$genbank_id, function(n){
     
     genbank_label = n$text_value
-    genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA)
+    genbank_df = data.frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA, stringsAsFactors = FALSE)
     genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , genbank_id)
     tt$add_triple(genbank_id, rdf_type , GenBankAccession)
